@@ -1,0 +1,39 @@
+flows:
+ - "tests/**"
+#  tests/*
+#  tests/auth/**
+
+# includeTags:
+#   - regression
+
+# executionOrder:
+#   continueOnFailure: true
+#   flowsOrder:
+#   - login-test
+#   - register-test
+#   - upgrade-plus-test
+  # and execution order of other tests come after this
+
+# 
+# platforms:
+#   android:
+#     deviceName: "Pixel 7 Pro"
+#     platformVersion: "13.0"
+#     appPath: "./apps/todo-app.apk"
+#     disableAnimations: true
+#   ios: 
+#     disableAnimations: true
+
+# log the results of the test execution to a file
+# testOutDir: ./maestro-output
+
+# Maestro cloud only
+# baseLineBranch: main
+# notification:
+#   email:
+#     enabled: true
+#     recipients: ["aseelyaserco@gmail.com"]
+#   slack:
+#     enabled: false
+#     channel: "#maestro-testing"
+#     webhookUrl: "https://hooks.slack.com/services/T04Q0K6J9B7/B04Q0K6J9B7/4f4f4f4f4f4f4f4f4f4f4f"
