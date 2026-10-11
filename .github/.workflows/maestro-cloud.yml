@@ -3,7 +3,7 @@ name: Run Flows on Maestro Cloud
 on:
   push:
     branches: [main]
-  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   maestro-cloud:
@@ -25,3 +25,4 @@ jobs:
           api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
           app-file: app-release.apk
           workspace: .maestro
+          
