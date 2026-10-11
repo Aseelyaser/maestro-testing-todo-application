@@ -1,25 +1,27 @@
-name: E2E cloud 
+name: Run Flows on Maestro Cloud
+
 on:
   push:
     branches: [main]
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
 jobs:
   maestro-cloud:
-    name: Run Flows on Maestro Cloud
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch the app under test
+
+      - name: Fetch the app
         env:
           APP_APK_URL: https://github.com/Hatamleh/maestro-todo-application-android/releases/latest/download/QAcart-Todo.apk
         run: |
           curl -sSL --fail "$APP_APK_URL" -o app-release.apk
           ls -lh app-release.apk
-        
-        - name: Run Maestro Cloud
-          uses: mobile-dev-inc/action-maestro-cloud@v3.0.1
-          with:
-            api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-            project-id: ${{ secrets.MAESTRO_PROJECT_ID }}
-            app-file: app-release.apk
-            workspace: maestro
+
+      - name: Run Maestro Cloud
+        uses: mobile-dev-inc/action-maestro-cloud@v1.8.1
+        with:
+          api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+          app-file: app-release.apk
+          workspace: .maestro
