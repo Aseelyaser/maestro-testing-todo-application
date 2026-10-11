@@ -1,5 +1,9 @@
 flows:
  - "tests/**"
+platforms:
+  android:
+    disableAnimations: true
+
 #  tests/*
 #  tests/auth/**
 
