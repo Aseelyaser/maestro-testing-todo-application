@@ -1,0 +1,55 @@
+name: Run Flows on Maestro (Free - Emulator)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  maestro-local:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the app
+        env:
+          APP_APK_URL: https://github.com/Hatamleh/maestro-todo-application-android/releases/latest/download/QAcart-Todo.apk
+        run: |
+          curl -sSL --fail "$APP_APK_URL" -o app-release.apk
+          ls -lh app-release.apk
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      # Android emulators need hardware acceleration (KVM) on GitHub runners
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run Maestro flows on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          script: |
+            adb install app-release.apk
+            maestro test --format junit --output maestro-report.xml maestro/
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maestro-report
+          path: maestro-report.xmlgit add .github/workflows/maestro-local.yml
