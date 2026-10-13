@@ -3,8 +3,8 @@ name: Run Flows on Maestro (Free - Emulator)
 on:
   schedule:
     - cron: '0 3 * * *'
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
   workflow_dispatch:
 
 jobs:
