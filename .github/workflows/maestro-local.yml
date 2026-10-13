@@ -52,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: maestro-report
-          path: maestro-report.xmlgit add .github/workflows/maestro-local.yml
+          path: maestro-report.xml
