@@ -16,7 +16,7 @@ jobs:
 
       - name: Fetch the app
         env:
-          APP_APK_URL: https://github.com/Hatamleh/maestro-todo-application-android/releases/latest/download/QAcart-Todo.apk
+          APP_APK_URL: https://github.com/Aseelyaser/maestro-testing-todo-application/releases/latest/download/QAcart-Todo.apk
         run: |
           curl -sSL --fail "$APP_APK_URL" -o app-release.apk
           ls -lh app-release.apk
